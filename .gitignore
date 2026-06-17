@@ -1,0 +1,74 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code（个人配置；若需共享 launch.json 等，可改为只忽略部分文件）
+.vscode/
+
+# Flutter / Dart / Pub
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+coverage/
+
+# FVM（Flutter 版本管理）
+.fvm/
+
+# 环境变量与密钥（勿提交本地配置或签名文件）
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+key.properties
+
+# 构建产物
+*.apk
+*.aab
+*.ipa
+*.app
+
+# 代码生成产物（build_runner 等）
+**/*.g.dart
+**/*.freezed.dart
+**/*.mocks.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Android / JVM 调试
+*.hprof
