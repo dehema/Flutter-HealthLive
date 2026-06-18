@@ -1,34 +1,76 @@
+# Flutter / Dart 项目清单文件，定义包名、版本、依赖与资源
+
+# Dart 包名，用于 import（如 import 'package:healthlive/...'）
+# 只能用小写字母、数字、下划线，且必须以字母开头
 name: healthlive
+
+# 项目简介，显示在 pub.dev（本项目未发布，仅作文档说明）
 description: HealthLive 生活健康科普客户端
+
+# 发布目标；"none" 表示私有应用，不会发布到 pub.dev
 publish_to: "none"
+
+# 版本号，格式：显示版本+构建号
+#   1.0.0  → 用户可见的版本名（versionName / CFBundleShortVersionString）
+#   +1     → 内部构建号（versionCode / CFBundleVersion），每次上架或发包应递增
+# 示例：1.0.1+2 表示「显示 1.0.1，第 2 次构建」
 version: 1.0.0+1
 
+# 运行环境约束
 environment:
+  # 兼容的 Dart SDK 范围：>=3.5.0 且 <4.0.0
   sdk: ">=3.5.0 <4.0.0"
 
+# 生产依赖：打包进正式 App 的库
 dependencies:
   flutter:
-    sdk: flutter
-  flutter_riverpod: ^2.6.1
-  go_router: ^14.8.1
-  dio: ^5.8.0
-  hive_flutter: ^1.1.0
-  flutter_secure_storage: ^9.2.4
-  shared_preferences: ^2.5.3
-  cached_network_image: ^3.4.1
-  flutter_markdown: ^0.7.7
-  intl: ^0.20.2
-  equatable: ^2.0.7
+    sdk: flutter                    # Flutter SDK 本体
+  flutter_riverpod: ^2.6.1          # 状态管理
+  go_router: ^14.8.1                # 声明式路由
+  dio: ^5.8.0                       # HTTP 网络请求
+  hive_flutter: ^1.1.0              # 本地 NoSQL 存储
+  flutter_secure_storage: ^9.2.4    # 安全存储（Token 等敏感数据）
+  shared_preferences: ^2.5.3        # 轻量键值对存储
+  cached_network_image: ^3.4.1      # 网络图片加载与缓存
+  flutter_markdown: ^0.7.7          # Markdown 渲染
+  intl: ^0.20.2                     # 国际化、日期/数字格式化
+  equatable: ^2.0.7                 # 值对象相等性比较（简化 == / hashCode）
 
+# 开发依赖：仅开发/测试时使用，不打进 release 包
 dev_dependencies:
   flutter_test:
-    sdk: flutter
-  flutter_lints: ^5.0.0
-  mocktail: ^1.0.4
+    sdk: flutter                    # Flutter 单元/组件测试框架
+  flutter_lints: ^5.0.0             # 官方推荐的 Dart 代码规范检查
+  mocktail: ^1.0.4                  # Mock 框架，用于单元测试
+  flutter_launcher_icons: ^0.14.4   # 从 app_icon.png 生成各平台启动图标
 
+# 应用图标生成配置（修改 app_icon 后执行：dart run flutter_launcher_icons）
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/images/brand/app_icon.png
+  remove_alpha_ios: true
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: assets/images/brand/app_icon.png
+  web:
+    generate: true
+    image_path: assets/images/brand/app_icon.png
+    background_color: "#000000"
+    theme_color: "#E8A0A0"
+  windows:
+    generate: true
+    image_path: assets/images/brand/app_icon.png
+    icon_size: 256
+  macos:
+    generate: true
+    image_path: assets/images/brand/app_icon.png
+
+# Flutter 专属配置
 flutter:
-  uses-material-design: true
+  uses-material-design: true        # 启用 Material Design 图标与组件
+
+  # 静态资源目录，构建时打包进 App
   assets:
-    - assets/images/
-    - assets/icons/
-    - assets/data/
+    - assets/images/                # 图片
+    - assets/icons/                 # 图标
+    - assets/data/                  # 本地 JSON 等数据（如 Mock 数据）

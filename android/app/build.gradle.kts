@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -31,6 +34,48 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    // Gradle 原生输出：build/app/outputs/apk/release/HealthLive.apk
+    applicationVariants.configureEach {
+        if (buildType.name == "release") {
+            outputs.configureEach {
+                (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                    "HealthLive.apk"
+            }
+        }
+    }
+}
+
+// Flutter 会把 APK 复制到 flutter-apk/ 并固定命名为 app-release.apk；
+// 构建结束后重命名为 HealthLive.apk，并保留 app-release.apk 硬链接供 Flutter CLI 识别。
+tasks.register("renameFlutterReleaseApk") {
+    doLast {
+        val flutterApkDir = layout.buildDirectory.get().asFile.resolve("outputs/flutter-apk")
+        val appRelease = flutterApkDir.resolve("app-release.apk")
+        val healthLive = flutterApkDir.resolve("HealthLive.apk")
+        if (!appRelease.exists()) return@doLast
+
+        Files.move(
+            appRelease.toPath(),
+            healthLive.toPath(),
+            StandardCopyOption.REPLACE_EXISTING,
+        )
+        try {
+            Files.createLink(appRelease.toPath(), healthLive.toPath())
+        } catch (_: Exception) {
+            Files.copy(
+                healthLive.toPath(),
+                appRelease.toPath(),
+                StandardCopyOption.REPLACE_EXISTING,
+            )
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.named("assembleRelease") {
+        finalizedBy("renameFlutterReleaseApk")
     }
 }
 

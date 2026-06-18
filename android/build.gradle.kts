@@ -37,6 +37,7 @@ subprojects {
     }
 }
 
+// 打包APK包目录
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")

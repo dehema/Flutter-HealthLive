@@ -5,6 +5,7 @@
 ## 文档
 
 - [前端开发指南](文档/前端开发指南.md)
+- [界面列表](文档/界面列表.md)
 - [美术资源列表](文档/美术资源列表.md)
 - [打包与环境配置](文档/打包&环境.md)
 
@@ -86,7 +87,7 @@ flutter test
 flutter build apk --dart-define=ENV=prod --dart-define=USE_MOCK=false --dart-define=API_BASE_URL=https://your-api.example.com
 ```
 
-APK 输出路径：`build/app/outputs/flutter-apk/app-release.apk`。完整环境说明见 [打包与环境配置](文档/打包&环境.md)。
+APK 输出路径：`build/app/outputs/flutter-apk/HealthLive.apk`（Flutter 控制台可能仍显示 `app-release.apk`，为同一文件硬链接）。完整环境说明见 [打包与环境配置](文档/打包&环境.md)。
 
 ## Git 与版本控制
 
