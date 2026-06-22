@@ -10,6 +10,15 @@ DOC_PATH = ROOT / "文档" / "数据库种子SQL.md"
 BASE = "2026-06-22T02:42:11.169Z"
 DEMO_USER = "00000000-0000-0000-0000-000000000001"
 
+# (id, code, name, description, icon, color, sort_order)
+CATEGORIES_DATA = [
+    (1, "lifestyle", "作息", "睡眠、早起、规律作息等生活方式科普", "bedtime_outlined", "#5B8DEF", 1),
+    (2, "exercise", "运动", "有氧、拉伸、力量训练等运动科普", "directions_run_outlined", "#3D8B7A", 2),
+    (3, "diet", "饮食", "早餐、饮水、营养搭配等饮食科普", "restaurant_outlined", "#F2A65A", 3),
+]
+
+CATEGORY_CODE_TO_ID = {code: cid for cid, code, *_ in CATEGORIES_DATA}
+
 CONTENTS_DATA = [
     (1, "lifestyle", "规律早睡的五个好处", "固定入睡时间有助于调节生物钟，提升第二天的精神状态",
      "## 为什么建议早睡?\n\n保持 **22:30 前入睡** 有助于身体进入修复状态。\n\n- 减少熬夜带来的内分泌紊乱\n- 降低焦虑与情绪波动"),
@@ -117,45 +126,74 @@ def sql_str(value: str) -> str:
     return "'" + value.replace("'", "''") + "'"
 
 
+def global_content_id(category_id: int, local_id: int) -> int:
+    """内容全局 ID：category_id * 1000 + 原序号，如 category_id=1、原 id=11 → 1011。"""
+    return category_id * 1000 + local_id
+
+
+def local_to_global_id(local_id: int) -> int:
+    cat_code = next(cat for lid, cat, *_ in CONTENTS_DATA if lid == local_id)
+    return global_content_id(CATEGORY_CODE_TO_ID[cat_code], local_id)
+
+
 def build_seed():
-    contents = []
-    for cid, cat, title, summary, body in CONTENTS_DATA:
-        contents.append({
+    categories = []
+    for cid, code, name, desc, icon, color, sort_order in CATEGORIES_DATA:
+        categories.append({
             "id": cid,
-            "category": cat,
+            "code": code,
+            "name": name,
+            "description": desc,
+            "icon": icon,
+            "color": color,
+            "sort_order": sort_order,
+            "published": True,
+            "created_at": BASE,
+            "updated_at": BASE,
+        })
+
+    contents = []
+    for local_id, cat, title, summary, body in CONTENTS_DATA:
+        category_id = CATEGORY_CODE_TO_ID[cat]
+        contents.append({
+            "id": global_content_id(category_id, local_id),
+            "category_id": category_id,
             "title": title,
             "summary": summary,
-            "cover_url": COVER_URLS.get(cid, ""),
+            "cover_url": COVER_URLS.get(local_id, ""),
             "body": body,
             "published": True,
             "sort_order": 0,
             "created_at": BASE,
-            "updated_at": f"2026-06-{(10 + cid % 10):02d}T08:00:00.000Z",
+            "updated_at": f"2026-06-{(10 + local_id % 10):02d}T08:00:00.000Z",
         })
 
     points = []
     pid = 1
-    for cid, *_ in CONTENTS_DATA:
-        for j, (title, desc, icon) in enumerate(CUSTOM_POINTS.get(cid, DEFAULT_POINTS), 1):
+    for local_id, cat, *_ in CONTENTS_DATA:
+        content_id = global_content_id(CATEGORY_CODE_TO_ID[cat], local_id)
+        for j, (title, desc, icon) in enumerate(CUSTOM_POINTS.get(local_id, DEFAULT_POINTS), 1):
             points.append({
-                "id": pid, "content_id": cid, "title": title,
+                "id": pid, "content_id": content_id, "title": title,
                 "description": desc, "icon": icon, "sort_order": j,
             })
             pid += 1
 
     tags = []
     tid = 1
-    for cid in range(1, 21):
-        for tag in CUSTOM_TAGS[cid]:
-            tags.append({"id": tid, "content_id": cid, "tag": tag})
+    for local_id, cat, *_ in CONTENTS_DATA:
+        content_id = global_content_id(CATEGORY_CODE_TO_ID[cat], local_id)
+        for tag in CUSTOM_TAGS[local_id]:
+            tags.append({"id": tid, "content_id": content_id, "tag": tag})
             tid += 1
 
     tips = []
-    for i, cid in enumerate(TIP_CONTENT_IDS, 1):
-        c = contents[cid - 1]
+    for i, local_id in enumerate(TIP_CONTENT_IDS, 1):
+        content_id = local_to_global_id(local_id)
+        c = next(item for item in contents if item["id"] == content_id)
         tips.append({
             "id": i,
-            "content_id": cid,
+            "content_id": content_id,
             "title": f"今日一知：{c['title'][:14]}",
             "summary": c["summary"],
             "tip_date": f"2026-06-{12 + i:02d}",
@@ -163,9 +201,9 @@ def build_seed():
         })
 
     recs = []
-    for i, cid in enumerate(REC_CONTENT_IDS, 1):
+    for i, local_id in enumerate(REC_CONTENT_IDS, 1):
         recs.append({
-            "id": i, "content_id": cid, "sort_order": i,
+            "id": i, "content_id": local_to_global_id(local_id), "sort_order": i,
             "published": True, "created_at": BASE,
         })
 
@@ -180,11 +218,11 @@ def build_seed():
     }]
 
     favs = [
-        {"user_id": DEMO_USER, "content_id": cid, "created_at": BASE}
-        for cid in FAV_CONTENT_IDS
+        {"user_id": DEMO_USER, "content_id": local_to_global_id(local_id), "created_at": BASE}
+        for local_id in FAV_CONTENT_IDS
     ]
 
-    return contents, points, tags, tips, recs, users, favs
+    return categories, contents, points, tags, tips, recs, users, favs
 
 
 def write_json(name: str, key: str, rows: list) -> None:
@@ -192,12 +230,35 @@ def write_json(name: str, key: str, rows: list) -> None:
     path.write_text(json.dumps({key: rows}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
+def generate_sql(categories, contents, points, tags, tips, recs, users, favs) -> str:
     lines = [
         "# HealthLive 数据库种子 SQL",
         "",
         "> 与 `assets/data/*.json` **一一对应**。在 pgAdmin Query Tool 中复制执行即可写入 PostgreSQL。",
         "> 执行前请确认表结构已创建；若已有旧数据，可先执行「第 0 步」清空。",
+        "",
+        "---",
+        "",
+        "## 表结构参考：categories（若尚未建表）",
+        "",
+        "```sql",
+        "CREATE TABLE IF NOT EXISTS categories (",
+        "    id          SERIAL PRIMARY KEY,",
+        "    code        VARCHAR(32) NOT NULL UNIQUE,",
+        "    name        VARCHAR(64) NOT NULL,",
+        "    description TEXT,",
+        "    icon        VARCHAR(64),",
+        "    color       VARCHAR(16),",
+        "    sort_order  INT NOT NULL DEFAULT 0,",
+        "    published   BOOLEAN NOT NULL DEFAULT TRUE,",
+        "    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),",
+        "    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()",
+        ");",
+        "",
+        "-- 若 contents 表尚无 category_id，可执行：",
+        "-- ALTER TABLE contents ADD COLUMN IF NOT EXISTS category_id INT REFERENCES categories(id);",
+        "-- ALTER TABLE contents DROP COLUMN IF EXISTS category;",
+        "```",
         "",
         "---",
         "",
@@ -207,7 +268,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
         "BEGIN;",
         "",
         "TRUNCATE TABLE user_favorites, home_recommendations, daily_tips,",
-        "               content_tags, content_benefit_points, contents, users",
+        "               content_tags, content_benefit_points, contents, categories, users",
         "RESTART IDENTITY CASCADE;",
         "",
         "COMMIT;",
@@ -215,22 +276,32 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
         "",
         "---",
         "",
-        "## 第 1 步：contents（20 条）",
+        f"## 第 1 步：categories（{len(categories)} 条）",
         "",
         "```sql",
         "BEGIN;",
         "",
     ]
 
+    for cat in categories:
+        lines.append(
+            f"INSERT INTO categories (id, code, name, description, icon, color, sort_order, published, created_at, updated_at) VALUES "
+            f"({cat['id']}, {sql_str(cat['code'])}, {sql_str(cat['name'])}, {sql_str(cat['description'])}, "
+            f"{sql_str(cat['icon'])}, {sql_str(cat['color'])}, {cat['sort_order']}, TRUE, "
+            f"{sql_str(cat['created_at'])}::timestamptz, {sql_str(cat['updated_at'])}::timestamptz);"
+        )
+
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 2 步：contents（20 条）", "", "```sql", "BEGIN;", ""])
+
     for c in contents:
         lines.append(
-            f"INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES "
-            f"({c['id']}, {sql_str(c['category'])}, {sql_str(c['title'])}, {sql_str(c['summary'])}, "
+            f"INSERT INTO contents (id, category_id, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES "
+            f"({c['id']}, {c['category_id']}, {sql_str(c['title'])}, {sql_str(c['summary'])}, "
             f"{sql_str(c['cover_url'])}, {sql_str(c['body'])}, TRUE, {c['sort_order']}, "
             f"{sql_str(c['created_at'])}::timestamptz, {sql_str(c['updated_at'])}::timestamptz);"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 2 步：content_benefit_points（40 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 3 步：content_benefit_points（40 条）", "", "```sql", "BEGIN;", ""])
 
     for p in points:
         icon = sql_str(p["icon"]) if p["icon"] else "NULL"
@@ -239,7 +310,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
             f"({p['id']}, {p['content_id']}, {sql_str(p['title'])}, {sql_str(p['description'])}, {icon}, {p['sort_order']});"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 3 步：content_tags（40 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 4 步：content_tags（40 条）", "", "```sql", "BEGIN;", ""])
 
     for t in tags:
         lines.append(
@@ -247,7 +318,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
             f"({t['id']}, {t['content_id']}, {sql_str(t['tag'])});"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 4 步：daily_tips（10 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 5 步：daily_tips（10 条）", "", "```sql", "BEGIN;", ""])
 
     for tip in tips:
         lines.append(
@@ -256,7 +327,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
             f"{sql_str(tip['tip_date'])}::date, {sql_str(tip['created_at'])}::timestamptz);"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 5 步：home_recommendations（8 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 6 步：home_recommendations（8 条）", "", "```sql", "BEGIN;", ""])
 
     for r in recs:
         lines.append(
@@ -264,7 +335,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
             f"({r['id']}, {r['content_id']}, {r['sort_order']}, TRUE, {sql_str(r['created_at'])}::timestamptz);"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 6 步：users（1 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 7 步：users（1 条）", "", "```sql", "BEGIN;", ""])
 
     for u in users:
         lines.append(
@@ -273,7 +344,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
             f"{sql_str(u['nickname'])}, TRUE, {sql_str(u['created_at'])}::timestamptz, {sql_str(u['updated_at'])}::timestamptz);"
         )
 
-    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 7 步：user_favorites（5 条）", "", "```sql", "BEGIN;", ""])
+    lines.extend(["", "COMMIT;", "```", "", "---", "", "## 第 8 步：user_favorites（5 条）", "", "```sql", "BEGIN;", ""])
 
     for f in favs:
         lines.append(
@@ -288,9 +359,10 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
         "",
         "---",
         "",
-        "## 第 8 步：重置自增序列（若 id 使用 SERIAL/BIGSERIAL）",
+        "## 第 9 步：重置自增序列（若 id 使用 SERIAL/BIGSERIAL）",
         "",
         "```sql",
+        "SELECT setval(pg_get_serial_sequence('categories', 'id'), (SELECT MAX(id) FROM categories));",
         "SELECT setval(pg_get_serial_sequence('contents', 'id'), (SELECT MAX(id) FROM contents));",
         "SELECT setval(pg_get_serial_sequence('content_benefit_points', 'id'), (SELECT MAX(id) FROM content_benefit_points));",
         "SELECT setval(pg_get_serial_sequence('content_tags', 'id'), (SELECT MAX(id) FROM content_tags));",
@@ -304,6 +376,7 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
         "",
         "| 表 | 条数 | 对应 JSON |",
         "|----|------|-----------|",
+        f"| categories | {len(categories)} | assets/data/categories.json |",
         f"| contents | {len(contents)} | assets/data/contents.json |",
         f"| content_benefit_points | {len(points)} | assets/data/content_benefit_points.json |",
         f"| content_tags | {len(tags)} | assets/data/content_tags.json |",
@@ -319,7 +392,8 @@ def generate_sql(contents, points, tags, tips, recs, users, favs) -> str:
 
 
 def main():
-    contents, points, tags, tips, recs, users, favs = build_seed()
+    categories, contents, points, tags, tips, recs, users, favs = build_seed()
+    write_json("categories.json", "categories", categories)
     write_json("contents.json", "contents", contents)
     write_json("content_benefit_points.json", "content_benefit_points", points)
     write_json("content_tags.json", "content_tags", tags)
@@ -327,8 +401,11 @@ def main():
     write_json("home_recommendations.json", "home_recommendations", recs)
     write_json("users.json", "users", users)
     write_json("user_favorites.json", "user_favorites", favs)
-    DOC_PATH.write_text(generate_sql(contents, points, tags, tips, recs, users, favs), encoding="utf-8")
-    print(f"Generated 20 contents, {len(points)} points, {len(tags)} tags")
+    DOC_PATH.write_text(
+        generate_sql(categories, contents, points, tags, tips, recs, users, favs),
+        encoding="utf-8",
+    )
+    print(f"Generated {len(categories)} categories, 20 contents, {len(points)} points, {len(tags)} tags")
     print(f"SQL doc: {DOC_PATH}")
 
 

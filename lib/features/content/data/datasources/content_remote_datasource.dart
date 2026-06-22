@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:healthlive/core/constants/api_constants.dart';
-import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/core/network/api_client.dart';
 import 'package:healthlive/core/network/api_paths.dart';
 import 'package:healthlive/features/content/data/models/content_dto.dart';
@@ -23,7 +22,7 @@ class ContentRemoteDataSource {
   }
 
   Future<PaginatedResponseDto> fetchByCategory({
-    required ContentCategory category,
+    required String categoryCode,
     required int page,
     required int pageSize,
   }) async {
@@ -31,7 +30,7 @@ class ContentRemoteDataSource {
       final data = await _apiClient.getMap(
         ApiPaths.contents,
         queryParameters: {
-          'category': category.apiValue,
+          'category': categoryCode,
           'page': page,
           'page_size': pageSize,
         },

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthlive/app/router/routes.dart';
 import 'package:healthlive/app/theme/app_colors.dart';
-import 'package:healthlive/core/constants/content_category.dart';
+import 'package:healthlive/features/category/presentation/providers/category_providers.dart';
 import 'package:healthlive/features/home/presentation/providers/home_providers.dart';
 import 'package:healthlive/shared/utils/category_style.dart';
 import 'package:healthlive/shared/widgets/async_value_widget.dart';
@@ -114,39 +114,52 @@ class _DailyTipCard extends StatelessWidget {
   }
 }
 
-class _CategoryShortcuts extends StatelessWidget {
+class _CategoryShortcuts extends ConsumerWidget {
   const _CategoryShortcuts();
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: ContentCategory.values.map((category) {
-        final color = CategoryStyle.colorOf(category);
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Card(
-              child: InkWell(
-                onTap: () => context.go(AppRoutes.category),
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                    children: [
-                      Icon(CategoryStyle.iconOf(category), color: color),
-                      const SizedBox(height: 8),
-                      Text(
-                        category.displayName,
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoriesAsync = ref.watch(categoriesProvider);
+
+    return categoriesAsync.when(
+      loading: () => const SizedBox(
+        height: 88,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+      error: (_, __) => const SizedBox.shrink(),
+      data: (categories) => Row(
+        children: categories.map((category) {
+          final color = CategoryStyle.colorOf(category);
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Card(
+                child: InkWell(
+                  onTap: () {
+                    ref.read(selectedCategoryIdProvider.notifier).state =
+                        category.id;
+                    context.go(AppRoutes.category);
+                  },
+                  borderRadius: BorderRadius.circular(16),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      children: [
+                        Icon(CategoryStyle.iconOf(category), color: color),
+                        const SizedBox(height: 8),
+                        Text(
+                          category.name,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }

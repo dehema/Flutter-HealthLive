@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:healthlive/app/theme/app_colors.dart';
+import 'package:healthlive/features/category/presentation/providers/category_providers.dart';
 import 'package:healthlive/features/content/presentation/providers/content_providers.dart';
 import 'package:healthlive/features/favorites/presentation/providers/favorites_providers.dart';
 import 'package:healthlive/shared/utils/category_style.dart';
@@ -59,7 +60,15 @@ class ContentDetailPage extends ConsumerWidget {
         value: detailAsync,
         onRetry: () => ref.invalidate(contentDetailProvider(contentId)),
         data: (content) {
-          final categoryColor = CategoryStyle.colorOf(content.category);
+          final categories = ref.watch(categoriesProvider).valueOrNull ?? const [];
+          final category = CategoryStyle.findById(content.categoryId, categories);
+          final categoryColor = category != null
+              ? CategoryStyle.colorOf(category)
+              : AppColors.primary;
+          final categoryIcon = category != null
+              ? CategoryStyle.iconOf(category)
+              : Icons.category_outlined;
+          final categoryName = category?.name ?? '';
 
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
@@ -83,7 +92,7 @@ class ContentDetailPage extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Icon(
-                    CategoryStyle.iconOf(content.category),
+                    categoryIcon,
                     size: 56,
                     color: categoryColor,
                   ),
@@ -95,7 +104,7 @@ class ContentDetailPage extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '${content.category.displayName} · ${DateFormat('yyyy-MM-dd').format(content.updatedAt)}',
+                '${categoryName.isEmpty ? '未分类' : categoryName} · ${DateFormat('yyyy-MM-dd').format(content.updatedAt)}',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 12),

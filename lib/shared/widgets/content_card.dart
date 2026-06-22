@@ -1,29 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:healthlive/app/theme/app_colors.dart';
-import 'package:healthlive/core/constants/content_category.dart';
+import 'package:healthlive/features/category/presentation/providers/category_providers.dart';
 import 'package:healthlive/features/content/domain/entities/benefit_content.dart';
 import 'package:healthlive/shared/utils/category_style.dart';
 import 'package:intl/intl.dart';
 
 /// 内容列表通用卡片，用于分类浏览、首页推荐、收藏、搜索等场景。
-class ContentCard extends StatelessWidget {
+class ContentCard extends ConsumerWidget {
   const ContentCard({
     super.key,
     required this.content,
     this.onTap,
   });
 
-  /// 要展示的内容数据。
   final BenefitContent content;
-
-  /// 点击卡片时的跳转或交互回调。
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final categoryColor = CategoryStyle.colorOf(content.category);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categories = ref.watch(categoriesProvider).valueOrNull ?? const [];
+    final category = CategoryStyle.findById(content.categoryId, categories);
+    final categoryColor = category != null
+        ? CategoryStyle.colorOf(category)
+        : AppColors.primary;
+    final categoryIcon =
+        category != null ? CategoryStyle.iconOf(category) : Icons.category_outlined;
+    final categoryName = category?.name ?? '';
     final dateText = DateFormat('yyyy-MM-dd').format(content.updatedAt);
     final title = kDebugMode
         ? '[${content.id}] ${content.title}'
@@ -44,16 +49,17 @@ class ContentCard extends StatelessWidget {
                   _CoverImage(
                     coverUrl: content.coverUrl,
                     categoryColor: categoryColor,
-                    category: content.category,
+                    categoryIcon: categoryIcon,
                   ),
-                  Positioned(
-                    left: 10,
-                    top: 10,
-                    child: _CategoryBadge(
-                      label: content.category.displayName,
-                      color: categoryColor,
+                  if (categoryName.isNotEmpty)
+                    Positioned(
+                      left: 10,
+                      top: 10,
+                      child: _CategoryBadge(
+                        label: categoryName,
+                        color: categoryColor,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -130,7 +136,6 @@ class ContentCard extends StatelessWidget {
   }
 }
 
-/// 封面左上角分类标签（白底 + 分类色圆点）。
 class _CategoryBadge extends StatelessWidget {
   const _CategoryBadge({required this.label, required this.color});
 
@@ -181,7 +186,6 @@ class _CategoryBadge extends StatelessWidget {
   }
 }
 
-/// 卡片内标签胶囊，背景色随分类主题色变化。
 class _TagChip extends StatelessWidget {
   const _TagChip({required this.label, required this.color});
 
@@ -209,24 +213,23 @@ class _TagChip extends StatelessWidget {
   }
 }
 
-/// 封面网络图，含加载占位与失败回退。
 class _CoverImage extends StatelessWidget {
   const _CoverImage({
     required this.coverUrl,
     required this.categoryColor,
-    required this.category,
+    required this.categoryIcon,
   });
 
   final String coverUrl;
   final Color categoryColor;
-  final ContentCategory category;
+  final IconData categoryIcon;
 
   @override
   Widget build(BuildContext context) {
     if (coverUrl.isEmpty) {
       return _CoverFallback(
         categoryColor: categoryColor,
-        category: category,
+        categoryIcon: categoryIcon,
       );
     }
 
@@ -248,21 +251,20 @@ class _CoverImage extends StatelessWidget {
       ),
       errorWidget: (_, __, ___) => _CoverFallback(
         categoryColor: categoryColor,
-        category: category,
+        categoryIcon: categoryIcon,
       ),
     );
   }
 }
 
-/// 无封面或加载失败时的渐变 + 分类图标占位。
 class _CoverFallback extends StatelessWidget {
   const _CoverFallback({
     required this.categoryColor,
-    required this.category,
+    required this.categoryIcon,
   });
 
   final Color categoryColor;
-  final ContentCategory category;
+  final IconData categoryIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +281,7 @@ class _CoverFallback extends StatelessWidget {
       ),
       child: Center(
         child: Icon(
-          CategoryStyle.iconOf(category),
+          categoryIcon,
           color: categoryColor.withValues(alpha: 0.65),
           size: 40,
         ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:healthlive/core/constants/content_category.dart';
+import 'package:healthlive/features/category/data/models/category_dto.dart';
 import 'package:healthlive/features/content/data/models/benefit_point_dto.dart';
 import 'package:healthlive/features/content/data/models/content_dto.dart';
 import 'package:healthlive/features/content/data/models/paginated_response_dto.dart';
@@ -13,7 +13,23 @@ class ContentJsonDataSource {
   static const _simulateLatency = Duration(milliseconds: 200);
 
   List<ContentDto>? _contentsCache;
+  List<CategoryDto>? _categoriesCache;
   HomeDto? _homeCache;
+
+  Future<List<CategoryDto>> fetchCategories() async {
+    if (_categoriesCache != null) {
+      return List<CategoryDto>.from(_categoriesCache!);
+    }
+
+    final rows = await _loadTable('categories.json', 'categories');
+    _categoriesCache = rows
+        .where(_isPublishedCategory)
+        .map(CategoryDto.fromJson)
+        .toList()
+      ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+
+    return List<CategoryDto>.from(_categoriesCache!);
+  }
 
   Future<void> _ensureLoaded() async {
     if (_contentsCache != null) return;
@@ -81,14 +97,14 @@ class ContentJsonDataSource {
   }
 
   Future<PaginatedResponseDto> fetchByCategory({
-    required ContentCategory category,
+    required int categoryId,
     required int page,
     required int pageSize,
   }) async {
     await Future<void>.delayed(_simulateLatency);
     await _ensureLoaded();
     final filtered = _contentsCache!
-        .where((item) => item.category == category.apiValue)
+        .where((item) => item.categoryId == categoryId)
         .toList();
     return _paginate(filtered, page, pageSize);
   }
@@ -165,6 +181,12 @@ class ContentJsonDataSource {
     return map;
   }
 
+  bool _isPublishedCategory(Map<String, dynamic> row) {
+    final published = row['published'];
+    if (published is bool) return published;
+    return true;
+  }
+
   bool _isPublishedContent(Map<String, dynamic> row) {
     final published = row['published'];
     if (published is bool) return published;
@@ -191,7 +213,7 @@ class ContentJsonDataSource {
       title: row['title']?.toString() ?? '',
       summary: row['summary']?.toString() ?? '',
       coverUrl: row['cover_url']?.toString() ?? '',
-      category: row['category']?.toString() ?? 'lifestyle',
+      categoryId: (row['category_id'] as num?)?.toInt() ?? 0,
       tags: tagRows.map((t) => t['tag']?.toString() ?? '').where((t) => t.isNotEmpty).toList(),
       points: pointRows
           .map(

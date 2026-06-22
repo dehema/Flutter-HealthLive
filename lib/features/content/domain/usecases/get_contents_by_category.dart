@@ -1,6 +1,6 @@
 import 'package:healthlive/core/constants/api_constants.dart';
-import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/core/utils/result.dart';
+import 'package:healthlive/features/category/domain/entities/category.dart';
 import 'package:healthlive/features/content/domain/entities/paginated_contents.dart';
 import 'package:healthlive/features/content/domain/repositories/content_repository.dart';
 
@@ -10,7 +10,7 @@ class GetContentsByCategory {
   final ContentRepository _repository;
 
   Future<Result<PaginatedContents>> call({
-    required ContentCategory category,
+    required Category category,
     int page = 1,
     int pageSize = ApiConstants.defaultPageSize,
   }) {

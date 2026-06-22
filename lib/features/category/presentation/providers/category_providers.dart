@@ -1,12 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/core/di/providers.dart';
 import 'package:healthlive/core/utils/result.dart';
+import 'package:healthlive/features/category/domain/entities/category.dart';
 import 'package:healthlive/features/content/domain/entities/benefit_content.dart';
+import 'package:healthlive/shared/utils/category_style.dart';
 
-final selectedCategoryProvider = StateProvider<ContentCategory>(
-  (ref) => ContentCategory.lifestyle,
-);
+/// 从 JSON / 服务端加载全部分类。
+final categoriesProvider = FutureProvider<List<Category>>((ref) async {
+  final result = await ref.watch(contentRepositoryProvider).getCategories();
+  return result.when(
+    success: (data) => data,
+    error: (failure) => throw failure as Object,
+  );
+});
+
+/// 当前选中的分类 ID（默认 1 = 作息）。
+final selectedCategoryIdProvider = StateProvider<int>((ref) => 1);
+
+/// 当前选中的分类实体；分类列表未加载完成时为 `null`。
+final selectedCategoryProvider = Provider<Category?>((ref) {
+  final categoryId = ref.watch(selectedCategoryIdProvider);
+  final categories = ref.watch(categoriesProvider).valueOrNull ?? const [];
+  return CategoryStyle.findById(categoryId, categories);
+});
 
 final categoryListProvider =
     AsyncNotifierProvider<CategoryListNotifier, List<BenefitContent>>(
@@ -20,8 +36,13 @@ class CategoryListNotifier extends AsyncNotifier<List<BenefitContent>> {
 
   @override
   Future<List<BenefitContent>> build() async {
-    ref.listen(selectedCategoryProvider, (_, __) {
+    ref.listen(selectedCategoryIdProvider, (_, __) {
       refresh();
+    });
+    ref.listen(categoriesProvider, (previous, next) {
+      if (next.hasValue) {
+        refresh();
+      }
     });
     return _loadFirstPage();
   }
@@ -30,6 +51,10 @@ class CategoryListNotifier extends AsyncNotifier<List<BenefitContent>> {
     _page = 1;
     _hasMore = true;
     final category = ref.read(selectedCategoryProvider);
+    if (category == null) {
+      return [];
+    }
+
     final useCase = ref.read(getContentsByCategoryProvider);
     final result = await useCase(category: category, page: _page);
 
@@ -61,6 +86,11 @@ class CategoryListNotifier extends AsyncNotifier<List<BenefitContent>> {
     _page += 1;
 
     final category = ref.read(selectedCategoryProvider);
+    if (category == null) {
+      _isLoadingMore = false;
+      return;
+    }
+
     final useCase = ref.read(getContentsByCategoryProvider);
     final result = await useCase(category: category, page: _page);
 

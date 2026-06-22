@@ -2,7 +2,7 @@
   "content_benefit_points": [
     {
       "id": 1,
-      "content_id": 1,
+      "content_id": 1001,
       "title": "改善睡眠质量",
       "description": "规律作息帮助大脑建立稳定的睡眠节律",
       "icon": "sleep",
@@ -10,7 +10,7 @@
     },
     {
       "id": 2,
-      "content_id": 1,
+      "content_id": 1001,
       "title": "提升专注力",
       "description": "充足睡眠后注意力与记忆力明显增强",
       "icon": "focus",
@@ -18,7 +18,7 @@
     },
     {
       "id": 3,
-      "content_id": 2,
+      "content_id": 2002,
       "title": "改善心肺功能",
       "description": "持续步行有助于增强心血管系统效率",
       "icon": "walk",
@@ -26,7 +26,7 @@
     },
     {
       "id": 4,
-      "content_id": 2,
+      "content_id": 2002,
       "title": "控制体重",
       "description": "每日适度活动有助于维持健康体重",
       "icon": "balance",
@@ -34,7 +34,7 @@
     },
     {
       "id": 5,
-      "content_id": 3,
+      "content_id": 3003,
       "title": "稳定能量供应",
       "description": "均衡营养避免血糖大幅波动",
       "icon": "energy",
@@ -42,7 +42,7 @@
     },
     {
       "id": 6,
-      "content_id": 3,
+      "content_id": 3003,
       "title": "支持长期健康",
       "description": "多样化饮食提供全面营养素",
       "icon": "nutrition",
@@ -50,7 +50,7 @@
     },
     {
       "id": 7,
-      "content_id": 4,
+      "content_id": 1004,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -58,7 +58,7 @@
     },
     {
       "id": 8,
-      "content_id": 4,
+      "content_id": 1004,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -66,7 +66,7 @@
     },
     {
       "id": 9,
-      "content_id": 5,
+      "content_id": 2005,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -74,7 +74,7 @@
     },
     {
       "id": 10,
-      "content_id": 5,
+      "content_id": 2005,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -82,7 +82,7 @@
     },
     {
       "id": 11,
-      "content_id": 6,
+      "content_id": 2006,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -90,7 +90,7 @@
     },
     {
       "id": 12,
-      "content_id": 6,
+      "content_id": 2006,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -98,7 +98,7 @@
     },
     {
       "id": 13,
-      "content_id": 7,
+      "content_id": 3007,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -106,7 +106,7 @@
     },
     {
       "id": 14,
-      "content_id": 7,
+      "content_id": 3007,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -114,7 +114,7 @@
     },
     {
       "id": 15,
-      "content_id": 8,
+      "content_id": 3008,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -122,7 +122,7 @@
     },
     {
       "id": 16,
-      "content_id": 8,
+      "content_id": 3008,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -130,7 +130,7 @@
     },
     {
       "id": 17,
-      "content_id": 9,
+      "content_id": 1009,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -138,7 +138,7 @@
     },
     {
       "id": 18,
-      "content_id": 9,
+      "content_id": 1009,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -146,7 +146,7 @@
     },
     {
       "id": 19,
-      "content_id": 10,
+      "content_id": 1010,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -154,7 +154,7 @@
     },
     {
       "id": 20,
-      "content_id": 10,
+      "content_id": 1010,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -162,7 +162,7 @@
     },
     {
       "id": 21,
-      "content_id": 11,
+      "content_id": 2011,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -170,7 +170,7 @@
     },
     {
       "id": 22,
-      "content_id": 11,
+      "content_id": 2011,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -178,7 +178,7 @@
     },
     {
       "id": 23,
-      "content_id": 12,
+      "content_id": 2012,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -186,7 +186,7 @@
     },
     {
       "id": 24,
-      "content_id": 12,
+      "content_id": 2012,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -194,7 +194,7 @@
     },
     {
       "id": 25,
-      "content_id": 13,
+      "content_id": 3013,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -202,7 +202,7 @@
     },
     {
       "id": 26,
-      "content_id": 13,
+      "content_id": 3013,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -210,7 +210,7 @@
     },
     {
       "id": 27,
-      "content_id": 14,
+      "content_id": 3014,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -218,7 +218,7 @@
     },
     {
       "id": 28,
-      "content_id": 14,
+      "content_id": 3014,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -226,7 +226,7 @@
     },
     {
       "id": 29,
-      "content_id": 15,
+      "content_id": 3015,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -234,7 +234,7 @@
     },
     {
       "id": 30,
-      "content_id": 15,
+      "content_id": 3015,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -242,7 +242,7 @@
     },
     {
       "id": 31,
-      "content_id": 16,
+      "content_id": 1016,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -250,7 +250,7 @@
     },
     {
       "id": 32,
-      "content_id": 16,
+      "content_id": 1016,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -258,7 +258,7 @@
     },
     {
       "id": 33,
-      "content_id": 17,
+      "content_id": 2017,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -266,7 +266,7 @@
     },
     {
       "id": 34,
-      "content_id": 17,
+      "content_id": 2017,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -274,7 +274,7 @@
     },
     {
       "id": 35,
-      "content_id": 18,
+      "content_id": 3018,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -282,7 +282,7 @@
     },
     {
       "id": 36,
-      "content_id": 18,
+      "content_id": 3018,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -290,7 +290,7 @@
     },
     {
       "id": 37,
-      "content_id": 19,
+      "content_id": 1019,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -298,7 +298,7 @@
     },
     {
       "id": 38,
-      "content_id": 19,
+      "content_id": 1019,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",
@@ -306,7 +306,7 @@
     },
     {
       "id": 39,
-      "content_id": 20,
+      "content_id": 2020,
       "title": "改善状态",
       "description": "坚持习惯后整体精力与情绪更稳定",
       "icon": "energy",
@@ -314,7 +314,7 @@
     },
     {
       "id": 40,
-      "content_id": 20,
+      "content_id": 2020,
       "title": "易于坚持",
       "description": "从低门槛开始，更容易形成长期习惯",
       "icon": "balance",

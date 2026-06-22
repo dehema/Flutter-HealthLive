@@ -6,7 +6,7 @@ class ContentDto {
     required this.title,
     required this.summary,
     required this.coverUrl,
-    required this.category,
+    required this.categoryId,
     required this.tags,
     required this.points,
     required this.body,
@@ -17,7 +17,7 @@ class ContentDto {
   final String title;
   final String summary;
   final String coverUrl;
-  final String category;
+  final int categoryId;
   final List<String> tags;
   final List<BenefitPointDto> points;
   final String body;
@@ -26,11 +26,11 @@ class ContentDto {
   factory ContentDto.fromJson(Map<String, dynamic> json) {
     final rawPoints = json['points'];
     return ContentDto(
-      id: json['id'] as String? ?? '',
+      id: json['id']?.toString() ?? '',
       title: json['title'] as String? ?? '',
       summary: json['summary'] as String? ?? '',
       coverUrl: json['cover_url'] as String? ?? '',
-      category: json['category'] as String? ?? 'lifestyle',
+      categoryId: _readCategoryId(json),
       tags: (json['tags'] as List<dynamic>? ?? [])
           .map((item) => item.toString())
           .toList(),
@@ -43,5 +43,22 @@ class ContentDto {
       body: json['body'] as String? ?? '',
       updatedAt: json['updated_at'] as String? ?? '',
     );
+  }
+
+  static int _readCategoryId(Map<String, dynamic> json) {
+    final categoryId = json['category_id'];
+    if (categoryId is num) {
+      return categoryId.toInt();
+    }
+    return _categoryCodeToId(json['category']?.toString());
+  }
+
+  static int _categoryCodeToId(String? code) {
+    return switch (code) {
+      'lifestyle' => 1,
+      'exercise' => 2,
+      'diet' => 3,
+      _ => 1,
+    };
   }
 }

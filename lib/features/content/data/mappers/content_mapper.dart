@@ -1,4 +1,3 @@
-import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/features/content/data/models/benefit_point_dto.dart';
 import 'package:healthlive/features/content/data/models/content_dto.dart';
 import 'package:healthlive/features/content/data/models/paginated_response_dto.dart';
@@ -15,7 +14,7 @@ class ContentMapper {
       title: dto.title,
       summary: dto.summary,
       coverUrl: dto.coverUrl,
-      category: ContentCategory.fromApi(dto.category),
+      categoryId: dto.categoryId,
       tags: dto.tags,
       points: dto.points.map(_toPointEntity).toList(),
       body: dto.body,

@@ -1,13 +1,15 @@
-import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/core/utils/result.dart';
+import 'package:healthlive/features/category/domain/entities/category.dart';
 import 'package:healthlive/features/content/domain/entities/benefit_content.dart';
 import 'package:healthlive/features/content/domain/entities/paginated_contents.dart';
 
 abstract class ContentRepository {
+  Future<Result<List<Category>>> getCategories();
+
   Future<Result<BenefitContent>> getContentDetail(String id);
 
   Future<Result<PaginatedContents>> getContentsByCategory({
-    required ContentCategory category,
+    required Category category,
     required int page,
     required int pageSize,
   });

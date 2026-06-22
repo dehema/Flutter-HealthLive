@@ -1,0 +1,40 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "code": "lifestyle",
+      "name": "作息",
+      "description": "睡眠、早起、规律作息等生活方式科普",
+      "icon": "bedtime_outlined",
+      "color": "#5B8DEF",
+      "sort_order": 1,
+      "published": true,
+      "created_at": "2026-06-22T02:42:11.169Z",
+      "updated_at": "2026-06-22T02:42:11.169Z"
+    },
+    {
+      "id": 2,
+      "code": "exercise",
+      "name": "运动",
+      "description": "有氧、拉伸、力量训练等运动科普",
+      "icon": "directions_run_outlined",
+      "color": "#3D8B7A",
+      "sort_order": 2,
+      "published": true,
+      "created_at": "2026-06-22T02:42:11.169Z",
+      "updated_at": "2026-06-22T02:42:11.169Z"
+    },
+    {
+      "id": 3,
+      "code": "diet",
+      "name": "饮食",
+      "description": "早餐、饮水、营养搭配等饮食科普",
+      "icon": "restaurant_outlined",
+      "color": "#F2A65A",
+      "sort_order": 3,
+      "published": true,
+      "created_at": "2026-06-22T02:42:11.169Z",
+      "updated_at": "2026-06-22T02:42:11.169Z"
+    }
+  ]
+}
