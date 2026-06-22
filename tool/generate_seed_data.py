@@ -81,6 +81,37 @@ TIP_CONTENT_IDS = [1, 5, 8, 11, 14, 17, 20, 3, 6, 9]
 REC_CONTENT_IDS = list(range(1, 9))
 FAV_CONTENT_IDS = [1, 2, 5, 8, 11]
 
+# Unsplash 免费图库（演示用）；格式统一 800×450
+# 许可：https://unsplash.com/license
+def _unsplash(photo_id: str) -> str:
+    return (
+        f"https://images.unsplash.com/{photo_id}"
+        "?auto=format&fit=crop&w=800&h=450&q=80"
+    )
+
+COVER_URLS = {
+    1: _unsplash("photo-1631049307264-da0ec9d70304"),   # 睡眠
+    2: _unsplash("photo-1441974231531-c6227db76b6e"),   # 步行
+    3: _unsplash("photo-1512621776951-a57141f2eefd"),   # 均衡饮食
+    4: _unsplash("photo-1506905925346-21bda4d32df4"),   # 早起/日出
+    5: _unsplash("photo-1416879595882-3373a0480b5b"),   # 晨间散步
+    6: _unsplash("photo-1518611012118-696072aa579a"),   # 拉伸
+    7: _unsplash("photo-1523362628745-0c100150b504"),   # 饮水
+    8: _unsplash("photo-1490645935967-10de6ba17061"),   # 早餐
+    9: _unsplash("photo-1618005182384-a83a8bd57fbe"),   # 手机/屏幕
+    10: _unsplash("photo-1586023492125-27b2c045efd7"),  # 午休
+    11: _unsplash("photo-1534438327276-14e5300c3a48"),  # 力量训练
+    12: _unsplash("photo-1544367567-0f2fcb009e0b"),     # 瑜伽
+    13: _unsplash("photo-1551024506-0bccd828d307"),     # 减糖/健康饮品
+    14: _unsplash("photo-1540189549336-e6e99c3679fe"),  # 地中海饮食
+    15: _unsplash("photo-1546069901-ba9599a7e63c"),     # 蛋白质
+    16: _unsplash("photo-1498050108023-c5249f4df085"),  # 数字断舍离
+    17: _unsplash("photo-1558618666-fcd25c85cd64"),     # 骑行
+    18: _unsplash("photo-1563805042-7684c019e1cb"),     # 发酵/酸奶
+    19: _unsplash("photo-1631049307264-da0ec9d70304"),  # 周末睡眠
+    20: _unsplash("photo-1522071820081-009f0129c71c"),  # 办公室运动
+}
+
 
 def sql_str(value: str) -> str:
     return "'" + value.replace("'", "''") + "'"
@@ -94,7 +125,7 @@ def build_seed():
             "category": cat,
             "title": title,
             "summary": summary,
-            "cover_url": "",
+            "cover_url": COVER_URLS.get(cid, ""),
             "body": body,
             "published": True,
             "sort_order": 0,

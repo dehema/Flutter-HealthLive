@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// 数据为空时的居中占位提示，支持标题、副标题与自定义操作区。
+///
+/// 通常由 [AsyncValueWidget] 在 [isEmpty] 为真时展示，
+/// 也可在各页面单独使用（如分类无结果、收藏为空）。
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
@@ -8,8 +12,13 @@ class EmptyState extends StatelessWidget {
     this.action,
   });
 
+  /// 主提示文案。
   final String title;
+
+  /// 可选的补充说明。
   final String? subtitle;
+
+  /// 可选操作按钮等自定义 Widget。
   final Widget? action;
 
   @override

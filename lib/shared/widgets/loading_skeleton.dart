@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:healthlive/app/theme/app_colors.dart';
 
+/// 列表加载占位骨架屏，模拟内容卡片的布局结构。
+///
+/// 作为 [AsyncValueWidget] 的默认 loading 态，避免空白等待。
 class LoadingSkeleton extends StatelessWidget {
   const LoadingSkeleton({super.key, this.itemCount = 4});
 
+  /// 骨架卡片条数。
   final int itemCount;
 
   @override
@@ -17,6 +21,7 @@ class LoadingSkeleton extends StatelessWidget {
   }
 }
 
+/// 单条骨架卡片：左侧色块 + 右侧多行灰色条。
 class _SkeletonCard extends StatelessWidget {
   const _SkeletonCard();
 

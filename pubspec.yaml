@@ -50,13 +50,13 @@ flutter_launcher_icons:
   ios: true
   image_path: assets/images/brand/app_icon.png
   remove_alpha_ios: true
-  adaptive_icon_background: "#000000"
+  adaptive_icon_background: "#3D8B7A"
   adaptive_icon_foreground: assets/images/brand/app_icon.png
   web:
     generate: true
     image_path: assets/images/brand/app_icon.png
-    background_color: "#000000"
-    theme_color: "#E8A0A0"
+    background_color: "#3D8B7A"
+    theme_color: "#3D8B7A"
   windows:
     generate: true
     image_path: assets/images/brand/app_icon.png

@@ -24,71 +24,71 @@ COMMIT;
 ```sql
 BEGIN;
 
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (1, 'lifestyle', '规律早睡的五个好处', '固定入睡时间有助于调节生物钟，提升第二天的精神状态', '', '## 为什么建议早睡?
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (1, 'lifestyle', '规律早睡的五个好处', '固定入睡时间有助于调节生物钟，提升第二天的精神状态', 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&h=450&q=80', '## 为什么建议早睡?
 
 保持 **22:30 前入睡** 有助于身体进入修复状态。
 
 - 减少熬夜带来的内分泌紊乱
 - 降低焦虑与情绪波动', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-11T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (2, 'exercise', '每天步行 30 分钟的变化', '适度运动能显著改善心肺功能，降低慢性病风险。', '', '## 步行的好处
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (2, 'exercise', '每天步行 30 分钟的变化', '适度运动能显著改善心肺功能，降低慢性病风险。', 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&h=450&q=80', '## 步行的好处
 
 每天步行 **30 分钟** 可以显著改善心血管健康。
 
 1. 选择舒适的鞋子
 2. 保持能交谈的速度', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-12T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (3, 'diet', '均衡饮食如何改变身体状态', '合理搭配蛋白质、碳水与蔬果，让身体获得稳定能量。', '', '## 均衡饮食
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (3, 'diet', '均衡饮食如何改变身体状态', '合理搭配蛋白质、碳水与蔬果，让身体获得稳定能量。', 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&h=450&q=80', '## 均衡饮食
 
 每餐包含优质蛋白，多吃蔬菜水果，控制精加工食品。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-13T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (4, 'lifestyle', '固定起床时间的力量', '即使周末也尽量保持相近的起床时刻，生物钟会更稳定。', '', '## 固定起床
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (4, 'lifestyle', '固定起床时间的力量', '即使周末也尽量保持相近的起床时刻，生物钟会更稳定。', 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&h=450&q=80', '## 固定起床
 
 尝试将起床时间波动控制在 **30 分钟以内**，减少「社交时差」。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-14T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (5, 'exercise', '晨间散步如何开启活力一天', '清晨适度活动可以促进血液循环，让身体更快苏醒。', '', '## 晨间散步建议
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (5, 'exercise', '晨间散步如何开启活力一天', '清晨适度活动可以促进血液循环，让身体更快苏醒。', 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&h=450&q=80', '## 晨间散步建议
 
 每天 **15～30 分钟** 即可，不必追求强度。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-15T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (6, 'exercise', '午后拉伸缓解久坐疲劳', '简短拉伸能放松颈肩腰背，改善久坐带来的僵硬感。', '', '## 办公拉伸
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (6, 'exercise', '午后拉伸缓解久坐疲劳', '简短拉伸能放松颈肩腰背，改善久坐带来的僵硬感。', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&h=450&q=80', '## 办公拉伸
 
 每工作 **45 分钟** 起身活动 3 分钟。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-16T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (7, 'diet', '每天喝够水的小技巧', '充足饮水有助于代谢、皮肤状态与精力维持。', '', '## 饮水建议
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (7, 'diet', '每天喝够水的小技巧', '充足饮水有助于代谢、皮肤状态与精力维持。', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&h=450&q=80', '## 饮水建议
 
 建议每天 **1500-2000 ml**，分次饮用。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-17T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (8, 'diet', '均衡早餐的重要性', '合理搭配蛋白质、碳水与膳食纤维，为上午提供持续能量。', '', '## 早餐搭配
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (8, 'diet', '均衡早餐的重要性', '合理搭配蛋白质、碳水与膳食纤维，为上午提供持续能量。', 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&h=450&q=80', '## 早餐搭配
 
 - 优质蛋白：鸡蛋、牛奶
 - 复合碳水：燕麦、全麦面食', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-18T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (9, 'lifestyle', '减少睡前屏幕时间', '蓝光会抑制褪黑素分泌，影响入睡速度与睡眠质量。', '', '## 睡前习惯
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (9, 'lifestyle', '减少睡前屏幕时间', '蓝光会抑制褪黑素分泌，影响入睡速度与睡眠质量。', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&h=450&q=80', '## 睡前习惯
 
 睡前 **1 小时** 远离手机与电脑。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-19T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (10, 'lifestyle', '午休 20 分钟的小恢复', '短暂午睡能提升下午专注力，但过长反而影响夜间睡眠。', '', '## 午休建议
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (10, 'lifestyle', '午休 20 分钟的小恢复', '短暂午睡能提升下午专注力，但过长反而影响夜间睡眠。', 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&h=450&q=80', '## 午休建议
 
 控制在 **20 分钟** 以内。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-10T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (11, 'exercise', '力量训练入门益处', '适度抗阻训练有助于增加肌肉量、改善代谢与骨密度。', '', '## 入门提示
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (11, 'exercise', '力量训练入门益处', '适度抗阻训练有助于增加肌肉量、改善代谢与骨密度。', 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&h=450&q=80', '## 入门提示
 
 从自重训练开始，每周 **2-3 次**。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-11T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (12, 'exercise', '瑜伽与柔韧性的关系', '规律拉伸与瑜伽练习可改善关节活动度，缓解肌肉紧张。', '', '## 练习建议
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (12, 'exercise', '瑜伽与柔韧性的关系', '规律拉伸与瑜伽练习可改善关节活动度，缓解肌肉紧张。', 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&h=450&q=80', '## 练习建议
 
 每周 **2 次** 15 分钟基础拉伸。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-12T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (13, 'diet', '控制添加糖摄入', '过多添加糖与代谢风险相关，减少含糖饮料是有效第一步。', '', '## 减糖技巧
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (13, 'diet', '控制添加糖摄入', '过多添加糖与代谢风险相关，减少含糖饮料是有效第一步。', 'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&h=450&q=80', '## 减糖技巧
 
 优先选择原味食物，阅读营养标签。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-13T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (14, 'diet', '地中海饮食要点', '以橄榄油、全谷物、鱼类和大量蔬菜为特色的饮食模式。', '', '## 核心原则
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (14, 'diet', '地中海饮食要点', '以橄榄油、全谷物、鱼类和大量蔬菜为特色的饮食模式。', 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&h=450&q=80', '## 核心原则
 
 多吃蔬果、全谷物、优质脂肪，适量鱼类。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-14T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (15, 'diet', '蛋白质摄入指南', '足量蛋白质支持肌肉修复、免疫与饱腹感。', '', '## 参考量
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (15, 'diet', '蛋白质摄入指南', '足量蛋白质支持肌肉修复、免疫与饱腹感。', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&h=450&q=80', '## 参考量
 
 可按 **体重 kg × 1.0～1.2 g** 估算每日需求。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-15T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (16, 'lifestyle', '数字断舍离与睡眠', '减少睡前信息过载，有助于大脑切换到休息模式。', '', '## 实践方法
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (16, 'lifestyle', '数字断舍离与睡眠', '减少睡前信息过载，有助于大脑切换到休息模式。', 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&h=450&q=80', '## 实践方法
 
 设置手机「睡眠模式」，充电位置在卧室外。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-16T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (17, 'exercise', '骑自行车通勤', '骑行是低冲击有氧方式，适合作为日常通勤或休闲运动。', '', '## 安全提示
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (17, 'exercise', '骑自行车通勤', '骑行是低冲击有氧方式，适合作为日常通勤或休闲运动。', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=450&q=80', '## 安全提示
 
 佩戴头盔，检查车况，注意交通规则。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-17T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (18, 'diet', '发酵食品与肠道健康', '酸奶、泡菜等发酵食品含益生菌，有助于维持肠道菌群平衡。', '', '## 选择建议
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (18, 'diet', '发酵食品与肠道健康', '酸奶、泡菜等发酵食品含益生菌，有助于维持肠道菌群平衡。', 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&h=450&q=80', '## 选择建议
 
 优先低糖发酵乳，注意冷藏条件。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-18T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (19, 'lifestyle', '周末也不报复性熬夜', '周末作息大幅偏移会加重周一疲劳，尽量与平日接近。', '', '## 周末作息
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (19, 'lifestyle', '周末也不报复性熬夜', '周末作息大幅偏移会加重周一疲劳，尽量与平日接近。', 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&h=450&q=80', '## 周末作息
 
 起床时间比平日延迟不超过 **1 小时**。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-19T08:00:00.000Z'::timestamptz);
-INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (20, 'exercise', '办公室微运动', '利用碎片时间做深蹲、提踵等，累积活动量。', '', '## 微运动示例
+INSERT INTO contents (id, category, title, summary, cover_url, body, published, sort_order, created_at, updated_at) VALUES (20, 'exercise', '办公室微运动', '利用碎片时间做深蹲、提踵等，累积活动量。', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&h=450&q=80', '## 微运动示例
 
 每小时 **1 分钟**：深蹲 10 次 + 提踵 15 次。', TRUE, 0, '2026-06-22T02:42:11.169Z'::timestamptz, '2026-06-10T08:00:00.000Z'::timestamptz);
 

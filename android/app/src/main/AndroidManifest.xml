@@ -6,6 +6,9 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- 加载网络封面图（Unsplash）及 Server API 需要 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- 整个应用的全局配置 -->
     <application
         android:label="HealthLive"

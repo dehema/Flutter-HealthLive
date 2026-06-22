@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthlive/app/router/routes.dart';
 
+/// 主导航壳层：底部 [NavigationBar] + 子路由 [child] 内容区。
+///
+/// 包裹首页、分类、收藏、我的四个 Tab 页面，
+/// 根据当前路由高亮对应 Tab 并处理切换。
 class MainShell extends StatelessWidget {
   const MainShell({super.key, required this.child});
 
+  /// 当前 Tab 对应的子页面（由 GoRouter 注入）。
   final Widget child;
 
+  /// 将路由路径映射为底部导航索引。
   int _locationToIndex(String location) {
     if (location.startsWith(AppRoutes.category)) {
       return 1;

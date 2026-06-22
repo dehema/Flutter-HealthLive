@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// 请求失败时的居中错误提示，可选「重试」按钮。
+///
+/// 通常由 [AsyncValueWidget] 在 `AsyncValue.error` 分支自动展示。
 class ErrorView extends StatelessWidget {
   const ErrorView({
     super.key,
@@ -7,7 +10,10 @@ class ErrorView extends StatelessWidget {
     this.onRetry,
   });
 
+  /// 错误描述，一般为异常 `toString()`。
   final String message;
+
+  /// 非空时显示重试按钮。
   final VoidCallback? onRetry;
 
   @override
