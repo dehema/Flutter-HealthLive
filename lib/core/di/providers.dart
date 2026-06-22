@@ -3,7 +3,7 @@ import 'package:healthlive/core/config/app_config.dart';
 import 'package:healthlive/core/network/api_client.dart';
 import 'package:healthlive/core/storage/local_storage.dart';
 import 'package:healthlive/core/storage/secure_storage.dart';
-import 'package:healthlive/features/content/data/datasources/content_mock_datasource.dart';
+import 'package:healthlive/features/content/data/datasources/content_json_datasource.dart';
 import 'package:healthlive/features/content/data/datasources/content_remote_datasource.dart';
 import 'package:healthlive/features/content/data/repositories/content_repository_impl.dart';
 import 'package:healthlive/features/content/domain/repositories/content_repository.dart';
@@ -33,8 +33,8 @@ final apiClientProvider = Provider<ApiClient>((ref) {
   );
 });
 
-final contentMockDataSourceProvider = Provider<ContentMockDataSource>(
-  (ref) => ContentMockDataSource(),
+final contentJsonDataSourceProvider = Provider<ContentJsonDataSource>(
+  (ref) => ContentJsonDataSource(),
 );
 
 final contentRemoteDataSourceProvider = Provider<ContentRemoteDataSource>(
@@ -45,7 +45,7 @@ final contentRepositoryProvider = Provider<ContentRepository>((ref) {
   return ContentRepositoryImpl(
     config: ref.watch(appConfigProvider),
     remoteDataSource: ref.watch(contentRemoteDataSourceProvider),
-    mockDataSource: ref.watch(contentMockDataSourceProvider),
+    jsonDataSource: ref.watch(contentJsonDataSourceProvider),
   );
 });
 
@@ -53,7 +53,7 @@ final homeRepositoryProvider = Provider<HomeRepository>((ref) {
   return HomeRepositoryImpl(
     config: ref.watch(appConfigProvider),
     remoteDataSource: ref.watch(contentRemoteDataSourceProvider),
-    mockDataSource: ref.watch(contentMockDataSourceProvider),
+    jsonDataSource: ref.watch(contentJsonDataSourceProvider),
   );
 });
 

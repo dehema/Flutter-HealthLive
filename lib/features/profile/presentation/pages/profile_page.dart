@@ -17,7 +17,7 @@ class ProfilePage extends ConsumerWidget {
           ListTile(
             leading: const CircleAvatar(child: Icon(Icons.person_outline)),
             title: const Text('健康生活用户'),
-            subtitle: Text(config.useMockData ? '当前：Mock 数据模式' : '当前：API 模式'),
+            subtitle: Text('当前：${config.contentDataSource.displayName}'),
           ),
           const Divider(),
           ListTile(

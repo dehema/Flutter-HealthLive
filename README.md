@@ -5,6 +5,9 @@
 ## 文档
 
 - [前端开发指南](文档/前端开发指南.md)
+- [客户端 API 接口与数据结构](文档/客户端API接口与数据结构.md)
+- [内容数据同步（JSON ↔ PostgreSQL）](文档/内容数据同步.md)
+- [数据库种子 SQL](文档/数据库种子SQL.md)
 - [界面列表](文档/界面列表.md)
 - [美术资源列表](文档/美术资源列表.md)
 - [打包与环境配置](文档/打包&环境.md)
@@ -33,27 +36,29 @@ git clone <仓库地址>
 cd Flutter-HealthLive
 
 flutter pub get
-flutter run --dart-define=USE_MOCK=true --dart-define=ENV=dev
+flutter run --dart-define=DATA_SOURCE=json --dart-define=ENV=dev
 ```
 
-对接本地 Go 后端：
+对接 Go 服务端：
 
 ```bash
 flutter run ^
-  --dart-define=USE_MOCK=false ^
+  --dart-define=DATA_SOURCE=server ^
   --dart-define=API_BASE_URL=http://10.0.2.2:8080 ^
   --dart-define=ENV=dev
 ```
 
-> Linux / macOS 将 `^` 换为 `\` 续行。真机调试时将 `10.0.2.2` 改为电脑局域网 IP。
+> 演示 APK 默认 `DATA_SOURCE=json`，读取 `assets/data/*.json`（与 PostgreSQL 表同名），**无需启动服务器**。
 
 ### 运行时配置（`--dart-define`）
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
-| `USE_MOCK` | `true` | `true` 使用内置 Mock；对接后端时设为 `false` |
-| `API_BASE_URL` | `http://10.0.2.2:8080` | Go 服务地址 |
+| `DATA_SOURCE` | `json` | `json` 读本地 JSON；`server` 请求 Go API |
+| `API_BASE_URL` | `http://10.0.2.2:8080` | Go 服务地址（`DATA_SOURCE=server` 时有效） |
 | `ENV` | `dev` | 环境标识：`dev` / `staging` / `prod` |
+
+> 兼容旧参数 `USE_MOCK`：`true`→json，`false`→server（未设置 `DATA_SOURCE` 时）。
 
 ## 项目结构
 
@@ -70,7 +75,7 @@ lib/
 │   ├── profile/      # 个人中心
 │   └── auth/         # 鉴权
 └── shared/           # 通用组件与工具
-assets/               # 图片、图标、Mock 数据
+assets/               # 图片、图标、assets/data/*.json（表数据）
 android/ ios/ ...     # 各平台工程（已纳入版本库）
 文档/                  # 开发、打包、美术文档
 ```
@@ -84,7 +89,11 @@ flutter test
 ## 打包
 
 ```bash
-flutter build apk --dart-define=ENV=prod --dart-define=USE_MOCK=false --dart-define=API_BASE_URL=https://your-api.example.com
+# 演示包（默认 json，无需服务器）
+flutter build apk --dart-define=DATA_SOURCE=json
+
+# 生产包（走 API）
+flutter build apk --dart-define=DATA_SOURCE=server --dart-define=ENV=prod --dart-define=API_BASE_URL=https://your-api.example.com
 ```
 
 APK 输出路径：`build/app/outputs/flutter-apk/HealthLive.apk`（Flutter 控制台可能仍显示 `app-release.apk`，为同一文件硬链接）。完整环境说明见 [打包与环境配置](文档/打包&环境.md)。

@@ -3,7 +3,7 @@ import 'package:healthlive/core/constants/content_category.dart';
 import 'package:healthlive/core/errors/failure.dart';
 import 'package:healthlive/core/utils/exception_mapper.dart';
 import 'package:healthlive/core/utils/result.dart';
-import 'package:healthlive/features/content/data/datasources/content_mock_datasource.dart';
+import 'package:healthlive/features/content/data/datasources/content_json_datasource.dart';
 import 'package:healthlive/features/content/data/datasources/content_remote_datasource.dart';
 import 'package:healthlive/features/content/data/mappers/content_mapper.dart';
 import 'package:healthlive/features/content/domain/entities/benefit_content.dart';
@@ -14,20 +14,20 @@ class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl({
     required AppConfig config,
     required ContentRemoteDataSource remoteDataSource,
-    required ContentMockDataSource mockDataSource,
+    required ContentJsonDataSource jsonDataSource,
   })  : _config = config,
         _remoteDataSource = remoteDataSource,
-        _mockDataSource = mockDataSource;
+        _jsonDataSource = jsonDataSource;
 
   final AppConfig _config;
   final ContentRemoteDataSource _remoteDataSource;
-  final ContentMockDataSource _mockDataSource;
+  final ContentJsonDataSource _jsonDataSource;
 
   @override
   Future<Result<BenefitContent>> getContentDetail(String id) async {
     try {
-      if (_config.useMockData) {
-        final dto = await _mockDataSource.fetchById(id);
+      if (_config.usesJsonContent) {
+        final dto = await _jsonDataSource.fetchById(id);
         if (dto == null) {
           return const Error(NotFoundFailure('内容不存在或已下线'));
         }
@@ -48,8 +48,8 @@ class ContentRepositoryImpl implements ContentRepository {
     required int pageSize,
   }) async {
     try {
-      final dto = _config.useMockData
-          ? await _mockDataSource.fetchByCategory(
+      final dto = _config.usesJsonContent
+          ? await _jsonDataSource.fetchByCategory(
               category: category,
               page: page,
               pageSize: pageSize,
@@ -72,8 +72,8 @@ class ContentRepositoryImpl implements ContentRepository {
     required int pageSize,
   }) async {
     try {
-      final dto = _config.useMockData
-          ? await _mockDataSource.search(
+      final dto = _config.usesJsonContent
+          ? await _jsonDataSource.search(
               keyword: keyword,
               page: page,
               pageSize: pageSize,
@@ -94,13 +94,12 @@ class ContentRepositoryImpl implements ContentRepository {
     List<String> ids,
   ) async {
     try {
-      final all = _mockDataSource.getAll();
-      final items = all
-          .where((item) => ids.contains(item.id))
-          .map(ContentMapper.toEntity)
-          .toList();
-
-      if (_config.useMockData) {
+      if (_config.usesJsonContent) {
+        final all = await _jsonDataSource.getAll();
+        final items = all
+            .where((item) => ids.contains(item.id))
+            .map(ContentMapper.toEntity)
+            .toList();
         return Success(items);
       }
 

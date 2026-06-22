@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "demo@healthlive.local",
+      "password_hash": "$2a$10$REPLACE_WITH_BCRYPT_HASH",
+      "nickname": "演示用户",
+      "is_active": true,
+      "created_at": "2026-06-22T02:42:11.169Z",
+      "updated_at": "2026-06-22T02:42:11.169Z"
+    }
+  ]
+}
